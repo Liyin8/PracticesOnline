@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -85,6 +86,12 @@ public class SplashActivity extends BaseActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tvDate = findViewById(R.id.activity_splash_tv_count_down);
+        tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seconds=0;
+            }
+        });
         if (!AppUtils.isNetworkAvailable()) {
             new AlertDialog.Builder(this)
                     .setMessage("当前无网络")
@@ -151,7 +158,7 @@ public class SplashActivity extends BaseActivity
 
     @Override
     public void cancelCount() {
-        seconds = 0;
+
     }
     // region 退出时提问
 

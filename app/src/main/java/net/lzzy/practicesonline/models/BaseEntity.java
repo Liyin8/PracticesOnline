@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 public class BaseEntity {
     @AsPrimaryKey
-    UUID id;
+     protected UUID id;
     BaseEntity(){
         id = UUID.randomUUID();
     }

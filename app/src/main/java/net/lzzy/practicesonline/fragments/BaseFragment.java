@@ -31,11 +31,11 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     *
+     * 获取视图
      */
     protected abstract void populate();
     /**
-     *
+     * 绑定视图
      * @return
      */
     protected abstract int getLayoutRes();
