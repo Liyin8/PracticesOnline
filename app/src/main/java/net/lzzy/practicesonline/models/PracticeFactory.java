@@ -34,9 +34,9 @@ public class PracticeFactory {
         return repository.get();
     }
 
-    public List<Practice> searchPracties(String shPracties) {
+    public List<Practice> searchPractices(String shPractices) {
         try {
-            return repository.getByKeyword(shPracties, new String[]{Practice.COL_NAME, Practice.COL_OUTLINES}, false);
+            return repository.getByKeyword(shPractices, new String[]{Practice.COL_NAME, Practice.COL_OUTLINES}, false);
 
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
@@ -79,9 +79,6 @@ public class PracticeFactory {
         setPracticeDown(id.toString());
     }
 
-    public boolean deletePracticeAndRelated(Practice practice) {
-        return false;
-    }
 
     public UUID getPracticeId(int apiId) {
         try {
@@ -96,7 +93,7 @@ public class PracticeFactory {
         return null;
     }
 
-    public boolean deletepracticeAndRelated(Practice practice) {
+    public boolean deletePracticeAndRelated(Practice practice) {
         try {
             List<String> sqlAction = new ArrayList<>();
             sqlAction.add(repository.getDeleteString(practice));

@@ -135,10 +135,7 @@ public class SplashActivity extends BaseActivity
     }
 
 
-    @Override
-    protected void populate() {
 
-    }
 
     @Override
     protected int getContainerId() {

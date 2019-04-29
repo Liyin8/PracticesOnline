@@ -19,12 +19,13 @@ import net.lzzy.practicesonline.utils.AppUtils;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
+    private Fragment fragment;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(getLayoutRes());
-        populate();
         splashFragment();
 
     }
@@ -35,7 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void splashFragment() {
         AppUtils.addActivity(this);
         FragmentManager manager = getSupportFragmentManager();
-        Fragment fragment = manager.findFragmentById(getContainerId());
+        fragment = manager.findFragmentById(getContainerId());
         if (fragment == null) {
             fragment = createFragment();
             manager.beginTransaction().add(getContainerId(), fragment).commit();
@@ -50,11 +51,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int getLayoutRes();
 
     /**
-     * 绑定视图
-     */
-    protected abstract void populate();
-
-    /**
      * 托管fragment 视图
      * @return
      */
@@ -65,7 +61,9 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @return
      */
     protected abstract Fragment createFragment();
-
+    protected Fragment getFragment(){
+        return fragment;
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
