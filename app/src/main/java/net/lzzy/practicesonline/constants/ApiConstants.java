@@ -55,4 +55,18 @@ public class ApiConstants {
     public static final String JSON_OPTION_LABEL="Label";
     public static final String JSON_OPTION_API_ID="Id";
     public static final String JSON_ANSWER_OPTION_ID="OptionId";
+
+    /**
+     * post方法的json标签
+     */
+    public static final String JSON_RESULT_API_ID="PracticeID";
+    public static final String JSON_RESULT_SCORE_RATIO="ScroreRatio";
+    public static final String JSON_RESULT_WRONG_IDS="WrongQuestionIds";
+    public static final String JSON_RESULT_PERSON_INFO="PhoneNo";
+
+    /**
+     *提交地址
+     */
+    public static final String ACTION_RESULT="/api/result/practiceResult";
+    public static final String URL_RESULT= URL_API.concat(ACTION_RESULT);
 }

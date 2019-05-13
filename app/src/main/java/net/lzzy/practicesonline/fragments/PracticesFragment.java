@@ -163,7 +163,6 @@ public class PracticesFragment extends BaseFragment {
     /**
      * Params执行异步任务参数 Progress进度条数据单位 返回结果
      */
-
     static class PracticeDownloader extends AsyncTask<Void, Void, String> {
         WeakReference<PracticesFragment> fragment;
 

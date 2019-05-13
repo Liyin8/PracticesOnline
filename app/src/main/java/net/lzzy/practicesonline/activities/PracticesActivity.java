@@ -6,6 +6,7 @@ import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.Window;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -31,6 +32,7 @@ public class PracticesActivity extends BaseActivity
     public static final String EXTRA_LOCAL_COUNT = "extraLocalCount";
     private ServiceConnection connection;
     public static final String EXTRA_PRACTICE_ID = "practices_id";
+    public static final String EXTRA_API_ID = "api_id";
     private boolean refresh;
 
     @Override
@@ -124,7 +126,8 @@ public class PracticesActivity extends BaseActivity
     @Override
     public void onQuestionSelected(String practiceId, int apiId) {
         Intent intent = new Intent(this, QuestionActivity.class);
-        intent.putExtra(PracticesActivity.EXTRA_PRACTICE_ID, apiId);
+        intent.putExtra(PracticesActivity.EXTRA_PRACTICE_ID, practiceId);
+        intent.putExtra(PracticesActivity.EXTRA_API_ID, apiId);
         startActivity(intent);
     }
 }

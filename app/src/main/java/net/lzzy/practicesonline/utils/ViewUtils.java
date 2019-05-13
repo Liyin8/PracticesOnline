@@ -41,6 +41,18 @@ public class ViewUtils {
             dialog.dismiss();
         }
     }
+    //region px dp 转换方法
+
+    public static int px2dp(int pxValue, Context context) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    public static int dp2px(int dpValue, Context context) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+    //endregion
 
     public static void gotoSetting(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_setting, null);

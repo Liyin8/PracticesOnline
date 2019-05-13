@@ -17,7 +17,7 @@ import java.util.UUID;
  */
 public class Option extends BaseEntity implements Sqlitable, Jsonable {
     @Ignored
-    public static final String COL_QUESTION_ID="questionId";
+    static final String COL_QUESTION_ID="questionId";
 
     private String content;
     private String label;
