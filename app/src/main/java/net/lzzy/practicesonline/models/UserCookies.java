@@ -33,6 +33,7 @@ public class UserCookies {
     private SharedPreferences spReadCount;
     private SharedPreferences spOption;
 
+
     private static final UserCookies INSTANCE = new UserCookies();
 
     private UserCookies() {
@@ -41,6 +42,7 @@ public class UserCookies {
         spPosition = AppUtils.getContext().getSharedPreferences("question_position", Context.MODE_PRIVATE);
         spReadCount = AppUtils.getContext().getSharedPreferences("read_count", Context.MODE_PRIVATE);
         spOption = AppUtils.getContext().getSharedPreferences("option_radio", Context.MODE_PRIVATE);
+
     }
 
     public static UserCookies getInstants() {

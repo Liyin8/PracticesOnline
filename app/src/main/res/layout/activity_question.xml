@@ -29,12 +29,13 @@
                 android:visibility="gone"
                 android:text="点击空白看解析"
                 />
-            <LinearLayout android:id="@+id/activity_question_dots"
+            <LinearLayout
+                android:id="@+id/activity_question_dots"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="horizontal"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:orientation="horizontal" />
         </LinearLayout>
         <FrameLayout
             android:layout_width="wrap_content"

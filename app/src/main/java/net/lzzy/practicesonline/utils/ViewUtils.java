@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -84,6 +85,22 @@ public class ViewUtils {
         }
     }
 
+
+    public abstract static class AbstractTouchListener implements View.OnTouchListener{
+        @SuppressWarnings("ClickableViewAccessivility")
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            return handleTouch(event);
+        }
+
+        /**
+         * 触摸监听
+         * @param event
+         * @return
+         */
+        public abstract boolean handleTouch(MotionEvent event);
+    }
+
     public abstract static class AbstractQueryListener implements
             SearchView.OnQueryTextListener{
         @Override
@@ -102,6 +119,8 @@ public class ViewUtils {
          * @param kw 搜索关键词
          */
         public abstract void handleQuery(String kw);
+
+
     }
 
 }

@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.Objects;
+
 /**
  *
  * @author lzzy_gxy
@@ -41,7 +43,7 @@ public abstract class BaseFragment extends Fragment {
     protected abstract int getLayoutRes();
 
     <T extends View> T find(@IdRes int id){
-        return getView().findViewById(id);
+        return Objects.requireNonNull(getView()).findViewById(id);
     }
     public abstract void search(String kw);
 }

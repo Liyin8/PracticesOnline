@@ -43,7 +43,6 @@ public class QuestionFragment extends BaseFragment {
     private TextView tvContent;
     private RadioGroup radioGroup;
     private TextView textView;
-    private SharedPreferences spRadio;
 
 
     public static QuestionFragment newInstance(String questionId, int pos, boolean isCommitted) {

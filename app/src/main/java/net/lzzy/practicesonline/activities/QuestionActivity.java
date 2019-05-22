@@ -23,6 +23,7 @@ import androidx.viewpager.widget.ViewPager;
 import net.lzzy.practicesonline.R;
 import net.lzzy.practicesonline.fragments.PracticesFragment;
 import net.lzzy.practicesonline.fragments.QuestionFragment;
+import net.lzzy.practicesonline.models.FavoriteFactory;
 import net.lzzy.practicesonline.models.Question;
 import net.lzzy.practicesonline.models.QuestionFactory;
 import net.lzzy.practicesonline.models.UserCookies;
@@ -45,9 +46,11 @@ import java.util.List;
 public class QuestionActivity extends AppCompatActivity {
     public static final int SUCCEED_CODES_MIX = 200;
     public static final int SUCCEED_CODES_MAX = 220;
-    public static final int SUCCEED = 0;
     public static final int FAILED = 1;
     public static final int REQUEST_CODE_RESULT = 0;
+    public static final String EXTRA_PRACTICE_ID = "extraPracticeId";
+    public static final String EXTRA_RESULT = "extraResult";
+
     private String practiceId;
     private int apiId;
     private List<Question> questions;
@@ -111,14 +114,32 @@ public class QuestionActivity extends AppCompatActivity {
     private void redirect() {
         List<QuestionResult> results = UserCookies.getInstants().getResultFromCookies(questions);
         Intent intent=new Intent(this,ResultActivity.class);
-        intent.putExtra("extraPracticeId",practiceId);
-        intent.putParcelableArrayListExtra("extraResult", (ArrayList<? extends Parcelable>) results);
+        intent.putExtra(EXTRA_PRACTICE_ID,practiceId);
+        intent.putParcelableArrayListExtra(EXTRA_RESULT, (ArrayList<? extends Parcelable>) results);
         startActivityForResult(intent, REQUEST_CODE_RESULT);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            if (data.getBooleanExtra(ResultActivity.QUESTION_C,false)){
+                FavoriteFactory factory=FavoriteFactory.getInstance();
+                List<Question> qs=new ArrayList<>();
+                for (Question question:questions){
+                    if (factory.isQuestionStarred(question.getId().toString())){
+                        qs.add(question);
+                    }
+
+                }
+                questions.clear();
+                questions.addAll(qs);
+                initDots();
+                adapter.notifyDataSetChanged();
+            }
+            pager.setCurrentItem(data.getIntExtra(ResultActivity.RESULT_POSITION,0),true);
+        }
+
     }
 
     /**
@@ -149,7 +170,7 @@ public class QuestionActivity extends AppCompatActivity {
         AppUtils.getExecutor().execute(() -> {
             try {
                 int code = PracticeService.postResult(result);
-                handler.sendMessage(handler.obtainMessage(SUCCEED, code));
+                handler.sendMessage(handler.obtainMessage(REQUEST_CODE_RESULT, code));
             } catch (JSONException | IOException e) {
                 handler.sendMessage(handler.obtainMessage(FAILED, e.getMessage()));
             }
@@ -166,7 +187,7 @@ public class QuestionActivity extends AppCompatActivity {
         public void handleMessage(Message msg, QuestionActivity questionActivity) {
 
             ViewUtils.disminssProgress();
-            if (msg.what == SUCCEED) {
+            if (msg.what == REQUEST_CODE_RESULT) {
                 int code = (int) msg.obj;
                 if (code >= SUCCEED_CODES_MIX && code <= SUCCEED_CODES_MAX) {
                     Toast.makeText(questionActivity, "提交成功", Toast.LENGTH_SHORT).show();
@@ -246,6 +267,7 @@ public class QuestionActivity extends AppCompatActivity {
         practiceId = getIntent().getStringExtra(PracticesActivity.EXTRA_PRACTICE_ID);
         apiId = getIntent().getIntExtra(PracticesActivity.EXTRA_API_ID, -1);
         questions = QuestionFactory.getInstance().getByPractice(practiceId);
+        isCommitted=UserCookies.getInstants().isPracticeCommitted(practiceId);
         if (apiId < 0 || questions == null || questions.size() == 0) {
             Toast.makeText(this, "no questions", Toast.LENGTH_SHORT).show();
             finish();
